@@ -25,7 +25,7 @@ class ExportLanguages extends Command
      *
      * @var string
      */
-    protected $description = 'Export all translation files to a single csv file.';
+    protected $description = 'Export all translation files to a single csv file, respecting vendor overrides.';
 
     private $parsedResources;
 
@@ -36,6 +36,7 @@ class ExportLanguages extends Command
      */
     public function handle()
     {
+        $targetFile = storage_path('app') . '/translations.csv';
 
         $languages = [
             'en',
@@ -73,8 +74,8 @@ class ExportLanguages extends Command
             $rows[] = $row;
         }
 
-        $filename = storage_path('app') . '/translations.csv';
-        $file = fopen($filename, 'w');
+        $file = fopen($targetFile, 'w');
+        $this->output->success('Wrote ' . count($rows) . ' translations to ' . $targetFile);
 
         // save each row of the data
         foreach ($rows as $row) {
