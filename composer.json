@@ -1,0 +1,14 @@
+{
+    "name": "catlabinteractive/laraval-lang2csv",
+    "description": "A command to export and import laravel localization files, with respect to vendor overrides.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thijs Van der Schaeghe",
+            "email": "thijs@catlab.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
