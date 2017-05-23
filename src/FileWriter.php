@@ -45,7 +45,7 @@ class FileWriter
                 $this->writeln($this->toKey($k), $depth);
                 $this->writeln("[", $depth);
                 $this->writeArray($v, $depth + 1);
-                $this->writeln(']', $depth);
+                $this->writeln('],', $depth);
             } else {
                 $this->writeValue($k, $v, $depth);
             }

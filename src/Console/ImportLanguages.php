@@ -150,35 +150,33 @@ class ImportLanguages extends Command
 
     /**
      * Process the vendor folder
-     * @param $vendorFolder
+     * @param $packages
      * @param $language
      * @param $data
      * @param $targetFolder
      */
-    protected function processVendorFolder($vendorFolder, $language, array $data, $targetFolder)
+    protected function processVendorFolder($packages, $language, array $data, $targetFolder)
     {
         // Special processing
-        foreach ($data as $vendor => $packages) {
-            if (!is_array($packages)) {
-                $this->warn('Vendor folder does not contain array. Skipping');
+        if (!is_array($data)) {
+            $this->warn('Vendor folder does not contain array. Skipping');
+            return;
+        }
+
+        foreach ($data as $package => $translations) {
+
+            if (!is_array($translations)) {
+                $this->warn('Vendor package ' . $package . self::DIRECTORY_SEPARATOR . $package . 'does not contain array. Skipping');
                 continue;
             }
 
-            foreach ($packages as $package => $translations) {
+            $targetFolder =
+                $targetFolder . self::DIRECTORY_SEPARATOR .
+                self::VENDOR_FOLDER_NAME . self::DIRECTORY_SEPARATOR .
+                $package . self::DIRECTORY_SEPARATOR .
+                $language . self::DIRECTORY_SEPARATOR;
 
-                if (!is_array($translations)) {
-                    $this->warn('Vendor package ' . $vendor . self::DIRECTORY_SEPARATOR . $package . 'does not contain array. Skipping');
-                    continue;
-                }
-
-                $targetFolder =
-                    $targetFolder . self::DIRECTORY_SEPARATOR .
-                    $vendorFolder . self::DIRECTORY_SEPARATOR .
-                    $vendor . self::DIRECTORY_SEPARATOR .
-                    $language . self::DIRECTORY_SEPARATOR;
-
-                $this->writeLanguageFolderToDirectory($translations, $targetFolder);
-            }
+            $this->writeLanguageFolderToDirectory($translations, $targetFolder);
         }
     }
 

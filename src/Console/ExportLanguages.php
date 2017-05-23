@@ -79,6 +79,8 @@ class ExportLanguages extends Command
         }
 
         $file = fopen($targetFile, 'w');
+        fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
         $this->output->success('Wrote ' . count($rows) . ' translations to ' . $targetFile);
 
         // save each row of the data
@@ -128,23 +130,10 @@ class ExportLanguages extends Command
                     break;
 
                 default:
-                    $packages = scandir($path . '/' . $vendor);
-                    foreach ($packages as $v) {
-                        switch ($v) {
-                            case '.':
-                            case '..':
-
-                                break;
-
-
-                            default:
-                                $this->scanFolder(
-                                    $prefix . $vendor . '.' . $v . '.',
-                                    $path . '/' . $vendor . '/' . $v
-                                );
-                                break;
-                        }
-                    }
+                    $this->scanFolder(
+                        $prefix . $vendor . '.',
+                        $path . '/' . $vendor
+                    );
                     break;
             }
         }
