@@ -2,17 +2,21 @@
 
 namespace CatLab\Lang2Csv\Console;
 
-use App\Http\Controllers\ExportController;
 use Illuminate\Console\Command;
 
 /**
  * Class ExportLanguages
+ *
+ * Scan all language files in the resources/lang directory and write all of them to a single
+ * comma separated values (csv) file, with each column containing a language.
+ *
+ * Vendor folder overrides are respected.
+ * https://laravel.com/docs/5.4/localization#overriding-package-language-files
+ *
  * @package CatLab\Lang2Csv\Console
  */
 class ExportLanguages extends Command
 {
-    protected $controller;
-
     /**
      * The name and signature of the console command.
      *
